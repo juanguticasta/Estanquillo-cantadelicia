@@ -1,0 +1,1 @@
+// JavaScript de ejemplo para manejo de ventas y sesiones
