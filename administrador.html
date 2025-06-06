@@ -6,8 +6,8 @@
   <title>Login Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Estilos para inputs y botones */
-    input[type="email"], input[type="password"] {
+    input[type="email"],
+    input[type="password"] {
       width: 90%;
       padding: 12px 15px;
       margin: 10px 0;
@@ -17,10 +17,13 @@
       color: #1B262C;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    input[type="email"]:focus, input[type="password"]:focus {
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
       border-color: #FFA500;
       outline: none;
     }
+
     button[type="submit"] {
       background-color: #228B22;
       color: white;
@@ -31,17 +34,30 @@
       border-radius: 10px;
       cursor: pointer;
     }
+
     button[type="submit"]:hover {
       background-color: #32CD32;
     }
+
     button.volver {
       background-color: transparent;
       border: none;
       font-size: 2rem;
       cursor: pointer;
     }
+
     button.volver:hover {
       transform: scale(1.2);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      text-align: center;
+      background-color: #f7f7f7;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -65,6 +81,7 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -95,13 +112,14 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Validar que sea el correo de administrador autorizado
-          if (email === "juandavidgutierrezc21@gmail.com") {
+          // Solo permitimos acceso a este correo administrador
+          if (email.toLowerCase() === "juandavidgutierrezc21@gmail.com") {
             window.location.href = "panel-admin.html";
           } else {
             alert("Este usuario no tiene permisos de administrador.");
             loader.style.display = 'none';
             mainContent.style.display = 'block';
+            auth.signOut();
           }
         })
         .catch((error) => {
