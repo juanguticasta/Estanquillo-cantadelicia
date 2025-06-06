@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrador - Cantadelicia</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    input[type="email"],
+    input[type="password"] {
+      width: 90%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #1B262C;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    button[type="submit"] {
+      background-color: #228B22;
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button.volver {
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>👨‍💼 Panel de Administrador</h1>
-    <p>Bienvenido al sistema, administrador.</p>
+  <div class="container" id="main-content">
+    <h1>Administrador</h1>
+    <p class="subtitulo">Accede al sistema de control</p>
 
-    <nav>
-      <ul>
-        <li><a href="#">📦 Inventario</a></li>
-        <li><a href="#">🛒 Ventas</a></li>
-        <li><a href="#">📈 Reportes</a></li>
-        <li><a href="#">💸 Compras</a></li>
-      </ul>
-    </nav>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" id="password" placeholder="Contraseña" required /><br /><br />
+      <button type="submit">Entrar</button>
+    </form>
 
-    <button onclick="cerrarSesion()">Cerrar sesión</button>
+    <br />
+    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
+  </div>
+
+  <div class="loader" id="loader" style="display: none;">
+    <span class="emoji">🥂</span>
+    <p>¡Cargando... salud! 🍷</p>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
@@ -39,17 +73,33 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    function cerrarSesion() {
-      signOut(auth).then(() => {
-        window.location.href = "index.html";
-      });
-    }
+    const loginForm = document.getElementById('loginForm');
+    const loader = document.getElementById('loader');
+    const content = document.getElementById('main-content');
 
-    // Evita acceso sin login
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "index.html";
-      }
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      content.style.display = 'none';
+      loader.style.display = 'flex';
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          if (email === "juandavidgutierrezc21@gmail.com") {
+            window.location.href = "admin-panel.html";
+          } else {
+            alert("Este usuario no es administrador.");
+            loader.style.display = 'none';
+            content.style.display = 'block';
+          }
+        })
+        .catch((error) => {
+          alert("Error de inicio de sesión: " + error.message);
+          loader.style.display = 'none';
+          content.style.display = 'block';
+        });
     });
   </script>
 </body>
