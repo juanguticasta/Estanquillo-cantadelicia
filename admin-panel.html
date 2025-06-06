@@ -3,119 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login Administrador - Estanquillo Cantadelicia</title>
+  <title>Panel Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    input[type="email"],
-    input[type="password"] {
-      width: 90%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: 2px solid #FFD700;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      color: #1B262C;
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      margin: 0; padding: 0;
     }
-
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      border-color: #FFA500;
-      outline: none;
-    }
-
-    button[type="submit"] {
+    header {
       background-color: #228B22;
       color: white;
-      font-size: 1.3rem;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      padding: 12px 25px;
+      padding: 15px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+    }
+    h2 {
+      color: #228B22;
+    }
+    button.cerrar-sesion {
+      background-color: #d9534f;
       border: none;
-      border-radius: 10px;
+      color: white;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 6px;
       cursor: pointer;
+      float: right;
+      margin-top: -40px;
+      margin-right: 20px;
+      transition: background-color 0.3s;
     }
-
-    button[type="submit"]:hover {
-      background-color: #32CD32;
-    }
-
-    button.volver {
-      background-color: transparent;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    button.volver:hover {
-      transform: scale(1.2);
+    button.cerrar-sesion:hover {
+      background-color: #c9302c;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main-content">
-    <h1>Administrador</h1>
-    <p class="subtitulo">Accede al sistema de control</p>
 
-    <form id="admin-login-form">
-      <input type="email" id="admin-email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" id="admin-password" placeholder="Contraseña" required /><br /><br />
-      <button type="submit">Entrar</button>
-    </form>
+<header>
+  <h1>Panel Administrador</h1>
+  <button class="cerrar-sesion" id="logoutBtn">Cerrar sesión</button>
+</header>
 
-    <br />
-    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
-  </div>
+<main>
+  <h2>Bienvenido, administrador</h2>
+  <p>Aquí podrás gestionar ventas, inventario, compras y más.</p>
+  <!-- Aquí luego puedes agregar las funcionalidades que quieras -->
+</main>
 
-  <div class="loader" id="loader" style="display:none;">
-    <span class="emoji">🥂</span>
-    <p>¡Cargando... salud! 🍷</p>
-  </div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
 
-  <!-- Firebase + Auth -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
+    authDomain: "estanquilloapp.firebaseapp.com",
+    projectId: "estanquilloapp",
+    storageBucket: "estanquilloapp.appspot.com",
+    messagingSenderId: "895904393569",
+    appId: "1:895904393569:web:d08471432b0a155a31fd20"
+  };
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
-      authDomain: "estanquilloapp.firebaseapp.com",
-      projectId: "estanquilloapp",
-      storageBucket: "estanquilloapp.appspot.com",
-      messagingSenderId: "895904393569",
-      appId: "1:895904393569:web:d08471432b0a155a31fd20"
-    };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const form = document.getElementById('admin-login-form');
-    const loader = document.getElementById('loader');
-    const mainContent = document.getElementById('main-content');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      loader.style.display = 'flex';
-      mainContent.style.display = 'none';
-
-      const email = document.getElementById('admin-email').value;
-      const password = document.getElementById('admin-password').value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          if (email === "juandavidgutierrezc21@gmail.com") {
-            window.location.href = "panel-admin.html";
-          } else {
-            alert("Este usuario no tiene permisos de administrador.");
-            loader.style.display = 'none';
-            mainContent.style.display = 'block';
-          }
-        })
-        .catch((error) => {
-          alert("Error al iniciar sesión: " + error.message);
-          loader.style.display = 'none';
-          mainContent.style.display = 'block';
-        });
+  const logoutBtn = document.getElementById('logoutBtn');
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      window.location.href = 'admin.html'; // Regresa al login admin
+    }).catch((error) => {
+      alert("Error al cerrar sesión: " + error.message);
     });
-  </script>
+  });
+
+  // Verificar que el usuario esté autenticado
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = 'admin.html'; // Si no está logueado, vuelve a login
+    }
+  });
+</script>
+
 </body>
 </html>
