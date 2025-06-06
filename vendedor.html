@@ -11,20 +11,21 @@
       width: 90%;
       padding: 12px 15px;
       margin: 10px 0;
-      border: 2px solid #FFD700; /* borde dorado */
+      border: 2px solid #FFD700;
       border-radius: 8px;
       font-size: 1.2rem;
       color: #1B262C;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transition: border-color 0.3s ease;
     }
+
     input[type="email"]:focus,
     input[type="password"]:focus {
-      border-color: #FFA500; /* naranja dorado */
+      border-color: #FFA500;
       outline: none;
     }
+
     button[type="submit"] {
-      background-color: #228B22; /* verde bosque */
+      background-color: #228B22;
       color: white;
       font-size: 1.3rem;
       font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -32,27 +33,38 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
+
     button[type="submit"]:hover {
-      background-color: #32CD32; /* verde lima */
+      background-color: #32CD32;
     }
+
     button.volver {
       background-color: transparent;
       border: none;
       font-size: 2rem;
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
+
     button.volver:hover {
       transform: scale(1.2);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      text-align: center;
+      background-color: #f7f7f7;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
   <div class="container" id="main-content">
     <h1>Vendedor</h1>
-    <p class="subtitulo">Accede al sistema de ventas</p>
+    <p class="subtitulo">Accede para ventas</p>
 
     <form id="vendedor-login-form">
       <input type="email" id="vendedor-email" placeholder="Correo electrónico" required /><br /><br />
@@ -69,6 +81,7 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -99,8 +112,5 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Solo permitimos este correo como vendedor:
-          if (email.toLowerCase() === "juangc21@hotmail.com") {
-            window.location.href = "panel-vendedor.html";
-          } else {
-            alert("Este usuario no tiene permisos
+          // Solo permitimos acceso a este correo vendedor
+          if (email.to
