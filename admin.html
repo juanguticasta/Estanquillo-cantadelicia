@@ -1,10 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Administrador - Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Inputs más grandes y con borde dorado */
+    input[type="email"],
+    input[type="password"] {
+      width: 90%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 2px solid #FFD700; /* borde dorado */
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #1B262C;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #FFA500; /* naranja dorado cuando se enfoca */
+      outline: none;
+    }
+
+    /* Botón Entrar con letra bonita y verde */
+    button[type="submit"] {
+      background-color: #228B22; /* verde bosque */
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #32CD32; /* verde lima */
+    }
+
+    /* Botón de volver con emoji y sin texto */
+    button.volver {
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button.volver:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
   <div class="container" id="main-content">
@@ -12,13 +63,13 @@
     <p class="subtitulo">Accede al sistema de control</p>
 
     <form>
-      <input type="email" placeholder="Correo electrónico" required><br><br>
-      <input type="password" placeholder="Contraseña" required><br><br>
+      <input type="email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" placeholder="Contraseña" required /><br /><br />
       <button type="submit" onclick="mostrarLoader(event)">Entrar</button>
     </form>
 
-    <br>
-    <button onclick="location.href='index.html'">Volver al inicio</button>
+    <br />
+    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
   <div class="loader" id="loader">
