@@ -68,3 +68,68 @@
   </script>
 </body>
 </html>
+[10:44 a. m., 6/6/2025] Juan David Gutiérrez C: <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Administrador - Estanquillo Cantadelicia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" id="main-content">
+    <h1>Administrador</h1>
+    <p class="subtitulo">Accede al sistema de control</p>
+
+    <form id="admin-login-form">
+      <input type="email" id="admin-email" placeholder="Correo electrónico" required><br><br>
+      <input type="password" id="admin-password" placeholder="Contraseña" required><br><br>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <br>
+    <button onclick="location.href='index.html'">🏠</button>
+  </div>
+
+  <div class="loader" id="loader">
+    <span class="emoji">🥂</span>
+    <p>¡Cargando... salud! 🍷</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
+      authDomain: "estanquilloapp.firebaseapp.com",
+      projectId: "estanquilloapp",
+      storageBucket: "estanquilloapp.appspot.com",
+      messagingSenderId: "895904393569",
+      appId: "1:895904393569:web:d08471432b0a155a31fd20"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("admin-login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('loader').style.display = 'flex';
+
+      const email = document.getElementById("admin-email").value;
+      const password = document.getElementById("admin-password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          window.location.href = "admin_dashboard.html";
+        })
+        .catch((error) => {
+          alert("Error al iniciar sesión: " + error.message);
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('main-content').style.display = 'block';
+        });
+    });
+  </script>
+</body>
+</html>
