@@ -11,22 +11,20 @@
       width: 90%;
       padding: 12px 15px;
       margin: 10px 0;
-      border: 2px solid #FFD700;
+      border: 2px solid #FFD700; /* borde dorado */
       border-radius: 8px;
       font-size: 1.2rem;
       color: #1B262C;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       transition: border-color 0.3s ease;
     }
-
     input[type="email"]:focus,
     input[type="password"]:focus {
-      border-color: #FFA500;
+      border-color: #FFA500; /* naranja dorado */
       outline: none;
     }
-
     button[type="submit"] {
-      background-color: #228B22;
+      background-color: #228B22; /* verde bosque */
       color: white;
       font-size: 1.3rem;
       font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -36,11 +34,9 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-
     button[type="submit"]:hover {
-      background-color: #32CD32;
+      background-color: #32CD32; /* verde lima */
     }
-
     button.volver {
       background-color: transparent;
       border: none;
@@ -48,7 +44,6 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
-
     button.volver:hover {
       transform: scale(1.2);
     }
@@ -59,9 +54,9 @@
     <h1>Administrador</h1>
     <p class="subtitulo">Accede al sistema de control</p>
 
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Correo electrónico" required /><br />
-      <input type="password" id="password" placeholder="Contraseña" required /><br />
+    <form id="admin-login-form">
+      <input type="email" id="admin-email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" id="admin-password" placeholder="Contraseña" required /><br /><br />
       <button type="submit">Entrar</button>
     </form>
 
@@ -69,12 +64,12 @@
     <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
-  <div class="loader" id="loader">
+  <div class="loader" id="loader" style="display:none;">
     <span class="emoji">🥂</span>
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
-  <!-- Firebase scripts -->
+  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -91,23 +86,31 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    const form = document.getElementById('admin-login-form');
     const loader = document.getElementById('loader');
     const mainContent = document.getElementById('main-content');
 
-    document.getElementById('login-form').addEventListener('submit', (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      mainContent.style.display = 'none';
       loader.style.display = 'flex';
+      mainContent.style.display = 'none';
+
+      const email = document.getElementById('admin-email').value;
+      const password = document.getElementById('admin-password').value;
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          window.location.href = 'admin_dashboard.html'; // página futura
+          // Solo usuarios autorizados para admin
+          if (email === "juandavidgutierrezc21@gmail.com") {
+            window.location.href = "panel-admin.html";
+          } else {
+            alert("Este usuario no tiene permisos de administrador.");
+            loader.style.display = 'none';
+            mainContent.style.display = 'block';
+          }
         })
         .catch((error) => {
-          alert("Error de inicio de sesión: " + error.message);
+          alert("Error al iniciar sesión: " + error.message);
           loader.style.display = 'none';
           mainContent.style.display = 'block';
         });
