@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Vendedor - Estanquillo Cantadelicia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" id="main-content">
+    <h1>Vendedor</h1>
+    <p class="subtitulo">Ingresa tus datos para continuar</p>
+
+    <form>
+      <input type="email" placeholder="Correo electrónico" required><br><br>
+      <input type="password" placeholder="Contraseña" required><br><br>
+      <button type="submit" onclick="mostrarLoader(event)">Entrar</button>
+    </form>
+
+    <br>
+    <button onclick="location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <div class="loader" id="loader">
+    <span class="emoji">🥂</span>
+    <p>¡Cargando... salud! 🍷</p>
+  </div>
+
+  <script>
+    function mostrarLoader(event) {
+      event.preventDefault();
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('loader').style.display = 'flex';
+
+      setTimeout(() => {
+        alert("Login simulado: ¡Bienvenido, vendedor!");
+        // Aquí en el futuro redirigimos a la interfaz real
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+      }, 1800);
+    }
+  </script>
+</body>
+</html>
