@@ -4,113 +4,94 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Administrador - Estanquillo Cantadelicia</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #1B262C;
-      color: #FFD700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: #0F4C75;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px #FFD700;
-      width: 350px;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    input[type="email"], input[type="password"] {
+    /* Estilos para inputs y botones */
+    input[type="email"],
+    input[type="password"] {
       width: 90%;
       padding: 12px 15px;
       margin: 10px 0;
       border: 2px solid #FFD700;
       border-radius: 8px;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: #1B262C;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    input[type="email"]:focus, input[type="password"]:focus {
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
       border-color: #FFA500;
       outline: none;
     }
-    button {
+
+    button[type="submit"] {
       background-color: #228B22;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       padding: 12px 25px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      margin-top: 15px;
-      transition: background-color 0.3s ease;
     }
-    button:hover {
+
+    button[type="submit"]:hover {
       background-color: #32CD32;
+    }
+
+    button.volver {
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    button.volver:hover {
+      transform: scale(1.2);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 2px solid #FFD700;
+      border-radius: 15px;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #228B22;
+    }
+    .subtitulo {
+      color: #555;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Login Administrador</h1>
-    <form id="adminLoginForm">
-      <input type="email" id="email" placeholder="Correo electrónico" required />
-      <input type="password" id="password" placeholder="Contraseña" required />
-      <button type="submit">Iniciar sesión</button>
+    <h1>Administrador</h1>
+    <p class="subtitulo">Accede al sistema de control</p>
+
+    <form id="admin-login-form">
+      <input type="email" id="admin-email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" id="admin-password" placeholder="Contraseña" required /><br /><br />
+      <button type="submit">Entrar</button>
     </form>
+
+    <br />
+    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
-
-    // Aquí pones tu configuración de Firebase (la que tienes en tu proyecto)
-    const firebaseConfig = {
-      apiKey: "TU_APIKEY_AQUI",
-      authDomain: "TU_AUTHDOMAIN_AQUI",
-      projectId: "TU_PROJECTID_AQUI",
-      storageBucket: "TU_STORAGEBUCKET_AQUI",
-      messagingSenderId: "TU_MESSAGINGSENDERID_AQUI",
-      appId: "TU_APPID_AQUI"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Correo de administrador autorizado
-    const adminEmailReal = "juandavidgutierrezc21@gmail.com";
-
-    // Aquí pones la contraseña del administrador, que usarás para probar el login:
-    // Por ejemplo: const adminPasswordReal = "TuContraseña123";
-    // Pero NO la validaremos aquí (Firebase hace la validación), esta variable es solo para que sepas dónde ponerla si quieres usarla localmente para pruebas.
-    // La contraseña debe estar en Firebase Authentication para ese usuario.
-
-    const form = document.getElementById('adminLoginForm');
-
-    form.addEventListener('submit', async (e) => {
+  <script>
+    // Al enviar el formulario, solo redirige al panel sin validar nada
+    document.getElementById('admin-login-form').addEventListener('submit', function(e) {
       e.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      // Validamos que el correo sea el admin
-      if(email !== adminEmailReal) {
-        alert("Este correo no tiene permisos de administrador.");
-        return;
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        // Si todo OK, redirigimos al panel
-        window.location.href = "panel-admin.html";
-      } catch (error) {
-        alert("Error al iniciar sesión: " + error.message);
-      }
+      // Aquí podrías capturar email y pass si quieres, pero no validamos
+      window.location.href = 'panel-admin.html'; // Redirige al panel
     });
   </script>
 </body>
