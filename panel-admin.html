@@ -2,25 +2,61 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Panel Administrador - Estanquillo Cantadelicia</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0F4C75;
-      color: #FFD700;
+      background-color: #f0f8ff;
+      margin: 0;
       padding: 20px;
     }
-    h1 {
-      border-bottom: 2px solid #FFD700;
-      padding-bottom: 10px;
+
+    header {
+      background-color: #228B22;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    main {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      background-color: #32CD32;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      padding: 20px 40px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      min-width: 200px;
+    }
+
+    button:hover {
+      background-color: #228B22;
     }
   </style>
 </head>
 <body>
-  <h1>Panel Administrador</h1>
-  <p>Bienvenido juandavidgutierrezc21@gmail.com</p>
-
-  <!-- Aquí luego iremos agregando los botones y funcionalidades -->
-
+  <header>Panel de Administrador</header>
+  <main>
+    <button onclick="alert('Módulo de Ventas próximamente')">Ventas</button>
+    <button onclick="alert('Módulo de Compras próximamente')">Compras</button>
+    <button onclick="alert('Módulo de Inventario próximamente')">Inventario</button>
+    <button onclick="alert('Módulo de Productos próximamente')">Productos</button>
+    <button onclick="location.href='administrador.html'">Cerrar sesión</button>
+  </main>
 </body>
 </html>
