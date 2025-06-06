@@ -69,7 +69,6 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
-  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -100,21 +99,8 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Solo usuarios autorizados para vendedor
-          if (email === "juangc21@hotmail.com") {
+          // Solo permitimos este correo como vendedor:
+          if (email.toLowerCase() === "juangc21@hotmail.com") {
             window.location.href = "panel-vendedor.html";
           } else {
-            alert("Este usuario no tiene permisos de vendedor.");
-            loader.style.display = 'none';
-            mainContent.style.display = 'block';
-          }
-        })
-        .catch((error) => {
-          alert("Error al iniciar sesión: " + error.message);
-          loader.style.display = 'none';
-          mainContent.style.display = 'block';
-        });
-    });
-  </script>
-</body>
-</html>
+            alert("Este usuario no tiene permisos
