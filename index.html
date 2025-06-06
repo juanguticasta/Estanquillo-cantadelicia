@@ -7,14 +7,29 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="main-content">
     <h1>Estanquillo Cantadelicia</h1>
-    <p class="subtitulo">¡Aquí se brinda sabroso!</p>
+    <p class="subtitulo">Aquí se brinda sabroso 🥂</p>
 
     <div class="login-buttons">
-      <button id="login-vendedor">Iniciar sesión como Vendedor</button>
-      <button id="login-admin">Iniciar sesión como Administrador</button>
+      <button onclick="cargarYRedirigir('vendedor.html')">Iniciar sesión como Vendedor</button>
+      <button onclick="cargarYRedirigir('admin.html')">Iniciar sesión como Administrador</button>
     </div>
   </div>
+
+  <div class="loader" id="loader">
+    <span class="emoji">🥂</span>
+    <p>¡Cargando... salud! 🍷</p>
+  </div>
+
+  <script>
+    function cargarYRedirigir(url) {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('loader').style.display = 'flex';
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1800); // tiempo de carga simulado
+    }
+  </script>
 </body>
 </html>
