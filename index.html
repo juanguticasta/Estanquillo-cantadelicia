@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estanquillo Cantadelicia</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="loader">
+        <img src="botella.gif" alt="Cargando..." class="botella" />
+    </div>
+
+    <div class="login-container" style="display:none;">
+        <h1>Estanquillo Cantadelicia</h1>
+        <img src="licores.png" alt="Licores" class="licores-img" />
+        <h2>Iniciar sesión</h2>
+        <button onclick="login('admin')">Administrador</button>
+        <button onclick="login('vendedor')">Vendedor</button>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    text-align: center;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botella {
+    width: 80px;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.login-container {
+    padding-top: 100px;
+}
+
+.licores-img {
+    width: 200px;
+    margin: 20px 0;
+}
+
+button {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    background-color: #ff9800;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e68900;
+}
