@@ -6,25 +6,23 @@
   <title>Login Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    input[type="email"],
-    input[type="password"] {
+    /* Estilos para inputs y botones */
+    input[type="email"], input[type="password"] {
       width: 90%;
       padding: 12px 15px;
       margin: 10px 0;
-      border: 2px solid #FFD700; /* borde dorado */
+      border: 2px solid #FFD700;
       border-radius: 8px;
       font-size: 1.2rem;
       color: #1B262C;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transition: border-color 0.3s ease;
     }
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      border-color: #FFA500; /* naranja dorado */
+    input[type="email"]:focus, input[type="password"]:focus {
+      border-color: #FFA500;
       outline: none;
     }
     button[type="submit"] {
-      background-color: #228B22; /* verde bosque */
+      background-color: #228B22;
       color: white;
       font-size: 1.3rem;
       font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -32,17 +30,15 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
     button[type="submit"]:hover {
-      background-color: #32CD32; /* verde lima */
+      background-color: #32CD32;
     }
     button.volver {
       background-color: transparent;
       border: none;
       font-size: 2rem;
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
     button.volver:hover {
       transform: scale(1.2);
@@ -99,8 +95,8 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Solo permitimos este correo como administrador:
-          if (email.toLowerCase() === "juandavidgutierrezc21@gmail.com") {
+          // Validar que sea el correo de administrador autorizado
+          if (email === "juandavidgutierrezc21@gmail.com") {
             window.location.href = "panel-admin.html";
           } else {
             alert("Este usuario no tiene permisos de administrador.");
