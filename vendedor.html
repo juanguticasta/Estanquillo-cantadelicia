@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Vendedor - Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    input[type="email"],
+    input[type="password"] {
+      width: 90%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #1B262C;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #FFA500;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      background-color: #228B22;
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #32CD32;
+    }
+
+    button.volver {
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button.volver:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
   <div class="container" id="main-content">
     <h1>Vendedor</h1>
-    <p class="subtitulo">Accede a tu punto de venta</p>
+    <p class="subtitulo">¡Bienvenido al sistema de ventas!</p>
 
-    <form id="vendedor-login-form">
-      <input type="email" id="vendedor-email" placeholder="Correo electrónico" required><br><br>
-      <input type="password" id="vendedor-password" placeholder="Contraseña" required><br><br>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Correo electrónico" required /><br />
+      <input type="password" id="password" placeholder="Contraseña" required /><br />
       <button type="submit">Entrar</button>
     </form>
 
-    <br>
-    <button onclick="location.href='index.html'">🏠</button>
+    <br />
+    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
-  <div class="loader" id="loader">
+  <div class="loader" id="loader" style="display: none;">
     <span class="emoji">🥂</span>
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Firebase scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -42,22 +91,25 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    document.getElementById("vendedor-login-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('loader').style.display = 'flex';
+    const loader = document.getElementById('loader');
+    const mainContent = document.getElementById('main-content');
 
-      const email = document.getElementById("vendedor-email").value;
-      const password = document.getElementById("vendedor-password").value;
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      mainContent.style.display = 'none';
+      loader.style.display = 'flex';
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          window.location.href = "vendedor_dashboard.html";
+          window.location.href = 'vendedor_dashboard.html'; // Página futura para el vendedor
         })
         .catch((error) => {
-          alert("Error al iniciar sesión: " + error.message);
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('main-content').style.display = 'block';
+          alert("Error de inicio de sesión: " + error.message);
+          loader.style.display = 'none';
+          mainContent.style.display = 'block';
         });
     });
   </script>
