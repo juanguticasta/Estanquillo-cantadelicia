@@ -18,6 +18,12 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #FFA500;
+      outline: none;
+    }
+
     button[type="submit"] {
       background-color: #228B22;
       color: white;
@@ -29,11 +35,19 @@
       cursor: pointer;
     }
 
+    button[type="submit"]:hover {
+      background-color: #32CD32;
+    }
+
     button.volver {
       background-color: transparent;
       border: none;
       font-size: 2rem;
       cursor: pointer;
+    }
+
+    button.volver:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
@@ -42,9 +56,9 @@
     <h1>Administrador</h1>
     <p class="subtitulo">Accede al sistema de control</p>
 
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" id="password" placeholder="Contraseña" required /><br /><br />
+    <form id="admin-login-form">
+      <input type="email" id="admin-email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" id="admin-password" placeholder="Contraseña" required /><br /><br />
       <button type="submit">Entrar</button>
     </form>
 
@@ -52,11 +66,12 @@
     <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
-  <div class="loader" id="loader" style="display: none;">
+  <div class="loader" id="loader" style="display:none;">
     <span class="emoji">🥂</span>
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -73,32 +88,32 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const loginForm = document.getElementById('loginForm');
+    const form = document.getElementById('admin-login-form');
     const loader = document.getElementById('loader');
-    const content = document.getElementById('main-content');
+    const mainContent = document.getElementById('main-content');
 
-    loginForm.addEventListener('submit', (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      content.style.display = 'none';
       loader.style.display = 'flex';
+      mainContent.style.display = 'none';
+
+      const email = document.getElementById('admin-email').value;
+      const password = document.getElementById('admin-password').value;
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           if (email === "juandavidgutierrezc21@gmail.com") {
-            window.location.href = "admin-panel.html";
+            window.location.href = "panel-admin.html";
           } else {
-            alert("Este usuario no es administrador.");
+            alert("Este usuario no tiene permisos de administrador.");
             loader.style.display = 'none';
-            content.style.display = 'block';
+            mainContent.style.display = 'block';
           }
         })
         .catch((error) => {
-          alert("Error de inicio de sesión: " + error.message);
+          alert("Error al iniciar sesión: " + error.message);
           loader.style.display = 'none';
-          content.style.display = 'block';
+          mainContent.style.display = 'block';
         });
     });
   </script>
