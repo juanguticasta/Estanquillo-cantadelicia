@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    input[type="email"],
+    input[type="password"] {
+      width: 90%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #1B262C;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #FFA500;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      background-color: #228B22;
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #32CD32;
+    }
+
+    button.volver {
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button.volver:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
   <div class="container" id="main-content">
@@ -12,83 +60,13 @@
     <p class="subtitulo">Accede al sistema de control</p>
 
     <form id="login-form">
-      <input type="email" id="email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" id="password" placeholder="Contraseña" required /><br /><br />
+      <input type="email" id="email" placeholder="Correo electrónico" required /><br />
+      <input type="password" id="password" placeholder="Contraseña" required /><br />
       <button type="submit">Entrar</button>
     </form>
 
     <br />
-    <button onclick="location.href='index.html'">🏠</button>
-  </div>
-
-  <div class="loader" id="loader" style="display:none;">
-    <span class="emoji">🥂</span>
-    <p>¡Cargando... salud! 🍷</p>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
-      authDomain: "estanquilloapp.firebaseapp.com",
-      projectId: "estanquilloapp",
-      storageBucket: "estanquilloapp.appspot.com",
-      messagingSenderId: "895904393569",
-      appId: "1:895904393569:web:d08471432b0a155a31fd20"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const form = document.getElementById("login-form");
-    const loader = document.getElementById("loader");
-    const mainContent = document.getElementById("main-content");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      mainContent.style.display = "none";
-      loader.style.display = "flex";
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        // Login correcto, redirigimos a la página principal del admin
-        window.location.href = "admin-panel.html"; // Aquí pones la página real del admin
-      } catch (error) {
-        alert("Error de login: " + error.message);
-        loader.style.display = "none";
-        mainContent.style.display = "block";
-      }
-    });
-  </script>
-</body>
-</html>
-[10:44 a. m., 6/6/2025] Juan David Gutiérrez C: <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Administrador - Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container" id="main-content">
-    <h1>Administrador</h1>
-    <p class="subtitulo">Accede al sistema de control</p>
-
-    <form id="admin-login-form">
-      <input type="email" id="admin-email" placeholder="Correo electrónico" required><br><br>
-      <input type="password" id="admin-password" placeholder="Contraseña" required><br><br>
-      <button type="submit">Entrar</button>
-    </form>
-
-    <br>
-    <button onclick="location.href='index.html'">🏠</button>
+    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
   <div class="loader" id="loader">
@@ -96,6 +74,7 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Firebase scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -112,22 +91,25 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    document.getElementById("admin-login-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('loader').style.display = 'flex';
+    const loader = document.getElementById('loader');
+    const mainContent = document.getElementById('main-content');
 
-      const email = document.getElementById("admin-email").value;
-      const password = document.getElementById("admin-password").value;
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      mainContent.style.display = 'none';
+      loader.style.display = 'flex';
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          window.location.href = "admin_dashboard.html";
+          window.location.href = 'admin_dashboard.html'; // página futura
         })
         .catch((error) => {
-          alert("Error al iniciar sesión: " + error.message);
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('main-content').style.display = 'block';
+          alert("Error de inicio de sesión: " + error.message);
+          loader.style.display = 'none';
+          mainContent.style.display = 'block';
         });
     });
   </script>
