@@ -57,7 +57,7 @@
 <body>
   <div class="container" id="main-content">
     <h1>Vendedor</h1>
-    <p class="subtitulo">¡Bienvenido al sistema de ventas!</p>
+    <p class="subtitulo">Accede al sistema de ventas</p>
 
     <form id="login-form">
       <input type="email" id="email" placeholder="Correo electrónico" required /><br />
@@ -74,7 +74,7 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
-  <!-- Firebase scripts -->
+  <!-- Firebase login -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -104,7 +104,7 @@
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          window.location.href = 'vendedor_dashboard.html'; // Página futura para el vendedor
+          window.location.href = 'vendedor_dashboard.html'; // Aquí irá el panel del vendedor
         })
         .catch((error) => {
           alert("Error de inicio de sesión: " + error.message);
