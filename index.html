@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container" id="main-content">
@@ -22,14 +22,35 @@
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
+  <!-- Script de animación de carga -->
   <script>
     function cargarYRedirigir(url) {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('loader').style.display = 'flex';
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById("loader").style.display = "flex";
       setTimeout(() => {
         window.location.href = url;
-      }, 1800); // tiempo de carga simulado
+      }, 1800);
     }
+  </script>
+
+  <!-- Firebase: conexión moderna -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
+      authDomain: "estanquilloapp.firebaseapp.com",
+      projectId: "estanquilloapp",
+      storageBucket: "estanquilloapp.appspot.com",
+      messagingSenderId: "895904393569",
+      appId: "1:895904393569:web:d08471432b0a155a31fd20"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
   </script>
 </body>
 </html>
