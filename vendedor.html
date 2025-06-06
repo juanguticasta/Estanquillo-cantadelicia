@@ -4,84 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Vendedor - Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    input[type="email"],
-    input[type="password"] {
-      width: 90%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: 2px solid #FFD700;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      color: #1B262C;
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
-
-    input[type="email"]:focus,
-    input[type="password"]:focus {
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    input, button {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 2px solid #FFD700;
+      font-size: 1.2rem;
+    }
+    input:focus {
       border-color: #FFA500;
       outline: none;
     }
-
-    button[type="submit"] {
+    button {
       background-color: #228B22;
       color: white;
-      font-size: 1.3rem;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      padding: 12px 25px;
       border: none;
-      border-radius: 10px;
       cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
-
-    button[type="submit"]:hover {
+    button:hover {
       background-color: #32CD32;
-    }
-
-    button.volver {
-      background-color: transparent;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    button.volver:hover {
-      transform: scale(1.2);
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 50px auto;
-      text-align: center;
-      background-color: #f7f7f7;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main-content">
-    <h1>Vendedor</h1>
-    <p class="subtitulo">Accede para ventas</p>
-
+  <div class="container">
+    <h1>Login Vendedor</h1>
     <form id="vendedor-login-form">
-      <input type="email" id="vendedor-email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" id="vendedor-password" placeholder="Contraseña" required /><br /><br />
+      <input type="email" id="vendedor-email" placeholder="Correo electrónico" required />
+      <input type="password" id="vendedor-password" placeholder="Contraseña" required />
       <button type="submit">Entrar</button>
     </form>
-
-    <br />
-    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
   </div>
 
-  <div class="loader" id="loader" style="display:none;">
-    <span class="emoji">🥂</span>
-    <p>¡Cargando... salud! 🍷</p>
-  </div>
-
-  <!-- Firebase + Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -99,18 +74,26 @@
     const auth = getAuth(app);
 
     const form = document.getElementById('vendedor-login-form');
-    const loader = document.getElementById('loader');
-    const mainContent = document.getElementById('main-content');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      loader.style.display = 'flex';
-      mainContent.style.display = 'none';
 
-      const email = document.getElementById('vendedor-email').value;
+      const email = document.getElementById('vendedor-email').value.trim().toLowerCase();
       const password = document.getElementById('vendedor-password').value;
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Solo permitimos acceso a este correo vendedor
-          if (email.to
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // Validar que sea el vendedor correcto
+        if (email === "juangc21@hotmail.com") {
+          window.location.href = "panel-vendedor.html";
+        } else {
+          alert("No tienes permisos de vendedor.");
+          await auth.signOut();
+        }
+      } catch (error) {
+        alert("Error al iniciar sesión: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
