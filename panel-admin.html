@@ -2,114 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login Vendedor - Estanquillo Cantadelicia</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Panel Administrador - Estanquillo Cantadelicia</title>
   <style>
-    /* Repetimos los mismos estilos que en admin.html para mantener coherencia */
-    input[type="email"], input[type="password"] {
-      width: 90%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: 2px solid #FFD700;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      color: #1B262C;
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0F4C75;
+      color: #FFD700;
+      padding: 20px;
     }
-    input[type="email"]:focus, input[type="password"]:focus {
-      border-color: #FFA500;
-      outline: none;
-    }
-    button[type="submit"] {
-      background-color: #228B22;
-      color: white;
-      font-size: 1.3rem;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    button[type="submit"]:hover {
-      background-color: #32CD32;
-    }
-    button.volver {
-      background-color: transparent;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-    button.volver:hover {
-      transform: scale(1.2);
+    h1 {
+      border-bottom: 2px solid #FFD700;
+      padding-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main-content">
-    <h1>Vendedor</h1>
-    <p class="subtitulo">Accede al sistema de ventas</p>
+  <h1>Panel Administrador</h1>
+  <p>Bienvenido juandavidgutierrezc21@gmail.com</p>
 
-    <form id="vendedor-login-form">
-      <input type="email" id="vendedor-email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" id="vendedor-password" placeholder="Contraseña" required /><br /><br />
-      <button type="submit">Entrar</button>
-    </form>
+  <!-- Aquí luego iremos agregando los botones y funcionalidades -->
 
-    <br />
-    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
-  </div>
-
-  <div class="loader" id="loader" style="display:none;">
-    <span class="emoji">🥂</span>
-    <p>¡Cargando... salud! 🍷</p>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
-      authDomain: "estanquilloapp.firebaseapp.com",
-      projectId: "estanquilloapp",
-      storageBucket: "estanquilloapp.appspot.com",
-      messagingSenderId: "895904393569",
-      appId: "1:895904393569:web:d08471432b0a155a31fd20"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const form = document.getElementById('vendedor-login-form');
-    const loader = document.getElementById('loader');
-    const mainContent = document.getElementById('main-content');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      loader.style.display = 'flex';
-      mainContent.style.display = 'none';
-
-      const email = document.getElementById('vendedor-email').value;
-      const password = document.getElementById('vendedor-password').value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Validar correo vendedor autorizado
-          if (email === "juangc21@hotmail.com") {
-            window.location.href = "panel-vendedor.html";
-          } else {
-            alert("Este usuario no tiene permisos de vendedor.");
-            loader.style.display = 'none';
-            mainContent.style.display = 'block';
-          }
-        })
-        .catch((error) => {
-          alert("Error al iniciar sesión: " + error.message);
-          loader.style.display = 'none';
-          mainContent.style.display = 'block';
-        });
-    });
-  </script>
 </body>
 </html>
