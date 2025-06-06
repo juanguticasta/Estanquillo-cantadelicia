@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estanquillo Cantadelicia</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estanquillo Cantadelicia</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="loader">
-        <img src="botella.gif" alt="Cargando..." class="botella" />
+  <div class="container">
+    <h1>Estanquillo Cantadelicia</h1>
+    <div class="images-container">
+      <img src="images/ron-viejo-de-caldas.jpg" alt="Ron Viejo de Caldas" />
+      <img src="images/aguardiente-amarillo.jpg" alt="Aguardiente Amarillo" />
     </div>
-
-    <div class="login-container" style="display:none;">
-        <h1>Estanquillo Cantadelicia</h1>
-        <img src="licores.png" alt="Licores" class="licores-img" />
-        <h2>Iniciar sesión</h2>
-        <button onclick="login('admin')">Administrador</button>
-        <button onclick="login('vendedor')">Vendedor</button>
+    <div class="login-buttons">
+      <button id="login-vendedor">Iniciar sesión Vendedor</button>
+      <button id="login-admin">Iniciar sesión Administrador</button>
     </div>
-
-    <script type="module" src="app.js"></script>
+  </div>
 </body>
 </html>
