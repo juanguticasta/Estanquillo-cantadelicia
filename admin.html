@@ -5,91 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Administrador - Estanquillo Cantadelicia</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Inputs más grandes y con borde dorado */
-    input[type="email"],
-    input[type="password"] {
-      width: 90%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: 2px solid #FFD700; /* borde dorado */
-      border-radius: 8px;
-      font-size: 1.2rem;
-      color: #1B262C;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transition: border-color 0.3s ease;
-    }
-
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      border-color: #FFA500; /* naranja dorado cuando se enfoca */
-      outline: none;
-    }
-
-    /* Botón Entrar con letra bonita y verde */
-    button[type="submit"] {
-      background-color: #228B22; /* verde bosque */
-      color: white;
-      font-size: 1.3rem;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button[type="submit"]:hover {
-      background-color: #32CD32; /* verde lima */
-    }
-
-    /* Botón de volver con emoji y sin texto */
-    button.volver {
-      background-color: transparent;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    button.volver:hover {
-      transform: scale(1.2);
-    }
-  </style>
 </head>
 <body>
   <div class="container" id="main-content">
     <h1>Administrador</h1>
     <p class="subtitulo">Accede al sistema de control</p>
 
-    <form>
-      <input type="email" placeholder="Correo electrónico" required /><br /><br />
-      <input type="password" placeholder="Contraseña" required /><br /><br />
-      <button type="submit" onclick="mostrarLoader(event)">Entrar</button>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Correo electrónico" required /><br /><br />
+      <input type="password" id="password" placeholder="Contraseña" required /><br /><br />
+      <button type="submit">Entrar</button>
     </form>
 
     <br />
-    <button class="volver" onclick="location.href='index.html'" title="Volver al inicio">🏠</button>
+    <button onclick="location.href='index.html'">🏠</button>
   </div>
 
-  <div class="loader" id="loader">
+  <div class="loader" id="loader" style="display:none;">
     <span class="emoji">🥂</span>
     <p>¡Cargando... salud! 🍷</p>
   </div>
 
-  <script>
-    function mostrarLoader(event) {
-      event.preventDefault();
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('loader').style.display = 'flex';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
 
-      setTimeout(() => {
-        alert("Login simulado: ¡Bienvenido, administrador!");
-        // Aquí en el futuro redirigimos a la interfaz real
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-      }, 1800);
-    }
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdKakTDCyqNU2vPKKLvW1k8RT1FqaROkg",
+      authDomain: "estanquilloapp.firebaseapp.com",
+      projectId: "estanquilloapp",
+      storageBucket: "estanquilloapp.appspot.com",
+      messagingSenderId: "895904393569",
+      appId: "1:895904393569:web:d08471432b0a155a31fd20"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("login-form");
+    const loader = document.getElementById("loader");
+    const mainContent = document.getElementById("main-content");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      mainContent.style.display = "none";
+      loader.style.display = "flex";
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // Login correcto, redirigimos a la página principal del admin
+        window.location.href = "admin-panel.html"; // Aquí pones la página real del admin
+      } catch (error) {
+        alert("Error de login: " + error.message);
+        loader.style.display = "none";
+        mainContent.style.display = "block";
+      }
+    });
   </script>
 </body>
 </html>
